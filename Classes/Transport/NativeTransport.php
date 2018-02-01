@@ -37,13 +37,26 @@ class NativeTransport extends AbstractTransport
      *
      * Sends a POST request.
      *
-     * @param string $uri The target URI
-     * @param array $data Form data to send with
+     * @param string $uri The target URI.
+     * @param array $data Form data to send with.
      * @param array $options Additional transport options.
+     * @param string $requestMethod A request method, either form_data or json.
      * @return mixed A PSR-7 response.
      */
-    public function post($uri, $data, $options = [], $requestMethod = 'form_data')
+    public function post($uri, array $data, $options = [], $requestMethod = 'form_data')
     {
-        // TODO implement return $this->requestFactory->request($url, 'POST');
+        $requestOptions = array_merge(
+            $options,
+            [
+                $requestMethod => $data,
+                'headers' => $this->getHeaders(),
+                'http_errors' => false
+            ]
+        );
+        return $this->requestFactory->request(
+            AbstractTransport::BASE_URI . $uri,
+            'POST',
+            $requestOptions
+        );
     }
 }
