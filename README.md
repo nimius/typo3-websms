@@ -3,12 +3,13 @@
 This extension provides a simple interface to interact with
 the [websms](https://developer.websms.com/web-api/) gateway.
 
-Unter the hood, guzzle is used for calling the REST API through cUrl.
-If your TYPO3 CMS version is lower than 8.1, raw guzzle is used without
-respecting any TYPO3-specific settings. If you're over 8.1, guzzle is
-already part of the core and integrates environment settings.
+Unter the hood, [guzzle](https://github.com/guzzle/guzzle) is used for calling the REST API through cUrl.
+
+If your TYPO3 CMS version is lower than 8.1, guzzle is used directly without respecting any TYPO3-specific settings. If you're over 8.1, guzzle is already [part of the core](https://docs.typo3.org/typo3cms/CoreApiReference/ApiOverview/Http/Index.html) and integrates environment settings.
 
 ## Example usage
+This is an example service class that you may implement for
+delivering messages to the websms gateway.
 
 ```php
 <?php
@@ -26,7 +27,7 @@ class SmsService
      *
      * @param string $recipient
      * @param string $text
-     * @return void
+     * @return bool
      */
     public function sendMessage(string $recipient, string $text)
     {
@@ -54,6 +55,8 @@ class SmsService
 
         // Passing the message to the gateway instance yields a response.
         $response = $gateway->send($message);
+
+        return $response->isSuccessful();
     }
 }
 ```

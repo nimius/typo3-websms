@@ -8,6 +8,7 @@ namespace NIMIUS\WebSms\Gateway;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use NIMIUS\WebSms\Response\Response;
 use NIMIUS\WebSms\Transport\CompatibilityTransport;
 use NIMIUS\WebSms\Transport\NativeTransport;
 
@@ -103,11 +104,13 @@ class Gateway
     {
         $this->transport->setHeaders(
             [
+                'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->accessToken,
                 'Content-Type' => 'application/json; charset=utf8'
             ]
         );
 
+        /** @var \GuzzleHttp\Psr7\Response */
         $response = $this->transport->post(
             'smsmessaging/text',
             [
@@ -119,6 +122,6 @@ class Gateway
             'json'
         );
 
-        return $response;
+        return GeneralUtility::makeInstance(Response::class, $response);
     }
 }
