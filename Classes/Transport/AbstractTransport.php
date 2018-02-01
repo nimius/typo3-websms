@@ -51,7 +51,7 @@ abstract class AbstractTransport
      *
      * @return array
      */
-    public function getHeaders(): array
+    public function getHeaders()
     {
         return $this->headers;
     }
@@ -67,5 +67,5 @@ abstract class AbstractTransport
      * @param string $requestMethod A request method, either form_data or json.
      * @return mixed A PSR-7 response.
      */
-    abstract public function post(string $uri, array $data, array $options, string $requestMethod);
+    abstract public function post($uri, array $data, $options = [], $requestMethod);
 }

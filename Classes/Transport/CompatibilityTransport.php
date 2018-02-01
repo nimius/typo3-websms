@@ -48,7 +48,7 @@ class CompatibilityTransport extends AbstractTransport
      * @param string $requestMethod A request method, either form_data or json.
      * @return mixed A PSR-7 response.
      */
-    public function post(string $uri, array $data, array $options = [], string $requestMethod = 'form_data')
+    public function post($uri, array $data, $options = [], $requestMethod = 'form_data')
     {
         $requestOptions = array_merge(
             $options,

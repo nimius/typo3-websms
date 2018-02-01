@@ -42,7 +42,7 @@ class NativeTransport extends AbstractTransport
      * @param array $options Additional transport options.
      * @return mixed A PSR-7 response.
      */
-    public function post($uri, $data, $options = [])
+    public function post($uri, $data, $options = [], $requestMethod = 'form_data')
     {
         // TODO implement return $this->requestFactory->request($url, 'POST');
     }

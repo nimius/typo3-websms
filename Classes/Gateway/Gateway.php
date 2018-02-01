@@ -73,7 +73,7 @@ class Gateway
      * @param string $token
      * @return void
      */
-    public function setAccessToken(string $token)
+    public function setAccessToken($token)
     {
         $this->accessToken = $token;
     }
@@ -84,7 +84,7 @@ class Gateway
      * @param bool $mode
      * @return void
      */
-    public function setTestMode(bool $mode)
+    public function setTestMode($mode)
     {
         $this->testMode = $mode;
     }

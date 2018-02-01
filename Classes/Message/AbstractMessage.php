@@ -55,7 +55,7 @@ abstract class AbstractMessage
      *
      * @return array
      */
-    public function getRecipients(): array
+    public function getRecipients()
     {
         return $this->recipients;
     }
@@ -76,7 +76,7 @@ abstract class AbstractMessage
      *
      * @return string
      */
-    public function getContent(): string
+    public function getContent()
     {
         return $this->content;
     }
