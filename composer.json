@@ -8,7 +8,8 @@
         "nimius/websms": "self.version"
     },
     "require": {
-        "php": ">=7.0.0"
+        "php": ">=7.0.0",
+        "guzzle/guzzle": "*"
     },
     "autoload": {
         "psr-4": {
