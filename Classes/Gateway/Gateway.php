@@ -20,7 +20,7 @@ use TYPO3\CMS\Core\Utility\VersionNumberUtility;
  * Responsible for transporting messages to the
  * websms endpoint.
  */
-class Gateway extends AbstractGateway
+class Gateway
 {
     /**
      * @var mixed Transport class instance.
@@ -67,12 +67,24 @@ class Gateway extends AbstractGateway
         $this->transport = $transport;
     }
 
-    public function setAccessToken($token)
+    /**
+     * Setter for access token.
+     *
+     * @param string $token
+     * @return void
+     */
+    public function setAccessToken(string $token)
     {
         $this->accessToken = $token;
     }
 
-    public function setTestMode($mode)
+    /**
+     * Setter for test mode.
+     *
+     * @param bool $mode
+     * @return void
+     */
+    public function setTestMode(bool $mode)
     {
         $this->testMode = $mode;
     }
@@ -80,25 +92,33 @@ class Gateway extends AbstractGateway
     /**
      * Send method.
      *
-     * Sends the given message instance via
-     * $transport to the API for delivery.
+     * Sends the given message instance via $transport to the API for delivery.
+     * This uses 'smsmessaging/text' instead of 'smsmessaging/simple'; It
+     * requires more work but allows UTF-8 sms content.
      *
      * @param mixed $message
      * @return void
      */
     public function send($message)
     {
-        $this->transport->setHeader(
-            'Authorization',
-            'Bearer ' . $this->accessToken
+        $this->transport->setHeaders(
+            [
+                'Authorization' => 'Bearer ' . $this->accessToken,
+                'Content-Type' => 'application/json; charset=utf8'
+            ]
         );
 
         $response = $this->transport->post(
-            '/smsmessaging/text',
+            'smsmessaging/text',
             [
-                'messageContent' => $message->getContent()
-            ]
+                'recipientAddressList' => $message->getRecipients(),
+                'messageContent' => $message->getContent(),
+                'test' => ($this->testMode ? 'true' : 'false')
+            ],
+            [],
+            'json'
         );
-        var_dump($response);
+
+        return $response;
     }
 }

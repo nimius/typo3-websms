@@ -63,21 +63,21 @@ abstract class AbstractMessage
     /**
      * Sets the message content.
      *
-     * @var string
+     * @var string $content
      * @return void
      */
-    public function setMessage($message)
+    public function setContent($content)
     {
-        $this->message = $message;
+        $this->content = $content;
     }
 
     /**
-     * Returns the message.
+     * Returns the message content.
      *
      * @return string
      */
-    public function getMessage(): string
+    public function getContent(): string
     {
-        return $this->message;
+        return $this->content;
     }
 }

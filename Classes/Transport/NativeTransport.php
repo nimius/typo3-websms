@@ -32,8 +32,18 @@ class NativeTransport extends AbstractTransport
         $this->requestFactory = GeneralUtility::makeInstance(RequestFactory::class);
     }
 
-    public function post($url)
+    /**
+     * POST method.
+     *
+     * Sends a POST request.
+     *
+     * @param string $uri The target URI
+     * @param array $data Form data to send with
+     * @param array $options Additional transport options.
+     * @return mixed A PSR-7 response.
+     */
+    public function post($uri, $data, $options = [])
     {
-        return $this->requestFactory->request($url, 'POST');
+        // TODO implement return $this->requestFactory->request($url, 'POST');
     }
 }

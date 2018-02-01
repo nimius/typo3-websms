@@ -14,9 +14,9 @@ namespace NIMIUS\WebSms\Transport;
 abstract class AbstractTransport
 {
     /**
-     * @var string Base url for API calls.
+     * @var string Base URI for API calls.
      */
-    const BASE_URL = 'https://api.websms.com/rest/';
+    const BASE_URI = 'https://api.websms.com/rest/';
 
     /**
      * @var array Additional request headers.
@@ -51,10 +51,21 @@ abstract class AbstractTransport
      *
      * @return array
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    abstract public function post($url);
+    /**
+     * Abstract POST method.
+     *
+     * Should send a POST request.
+     *
+     * @param string $uri The target URI.
+     * @param array $data Form data to send with.
+     * @param array $options Additional transport options.
+     * @param string $requestMethod A request method, either form_data or json.
+     * @return mixed A PSR-7 response.
+     */
+    abstract public function post(string $uri, array $data, array $options, string $requestMethod);
 }
