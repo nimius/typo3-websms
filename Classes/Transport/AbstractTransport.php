@@ -67,5 +67,5 @@ abstract class AbstractTransport
      * @param string $requestMethod A request method, either form_data or json.
      * @return mixed A PSR-7 response.
      */
-    abstract public function post($uri, array $data, $options = [], $requestMethod);
+    abstract public function post($uri, array $data, $options = [], $requestMethod = '');
 }
