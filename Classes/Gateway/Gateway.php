@@ -44,6 +44,7 @@ class Gateway
     public function __construct()
     {
         $this->transport = TransportFactory::getTransportInstanceForCurrentTypo3Version();
+        $this->initializeFromSettings();
     }
 
     /**
@@ -112,5 +113,21 @@ class Gateway
         );
 
         return GeneralUtility::makeInstance(Response::class, $response);
+    }
+
+    /**
+     * Initialize gateway properties from settings.
+     *
+     * @return void
+     */
+    protected function initializeFromSettings()
+    {
+        $settings = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['webSms'];
+        if (!$settings) {
+            return;
+        }
+
+        $this->testMode = (bool)$settings['testMode'];
+        $this->accessToken = $settings['token'];
     }
 }
