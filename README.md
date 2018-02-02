@@ -19,13 +19,16 @@ use NIMIUS\WebSms\Message\SmsMessage;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
+/**
+ * Service class for delivering SMS.
+ */
 class SmsService
 {
     /**
      * Example method to send SMS to a recipient.
      *
-     * @param string $recipient
-     * @param string $text
+     * @param string $recipient The phone number.
+     * @param string $text      The message body.
      * @return bool
      */
     public function sendMessage(string $recipient, string $text)
@@ -36,11 +39,16 @@ class SmsService
         // Setting up an SMS message instance.
         $message = GeneralUtility::makeInstance(SmsMessage::class);
 
-        // Adding a recipient. The number format follows MSISDN.
-        $message->addRecipient('410000000');
+        /*
+         * Adding a recipient. The number format follows MSISDN.
+         *
+         * Example:
+         *   +41 123 45 67 becomes 411234567
+         */
+        $message->addRecipient($recipient);
 
         // Setting the message content that is being delivered.
-        $message->setContent('Hello world!');
+        $message->setContent($text);
 
         // Passing the message to the gateway instance yields a response.
         $response = $gateway->send($message);
