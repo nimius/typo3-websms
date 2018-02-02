@@ -9,11 +9,9 @@ namespace NIMIUS\WebSms\Gateway;
  */
 
 use NIMIUS\WebSms\Response\Response;
-use NIMIUS\WebSms\Transport\CompatibilityTransport;
-use NIMIUS\WebSms\Transport\NativeTransport;
+use NIMIUS\WebSms\Transport\TransportFactory;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Gateway class.
@@ -45,16 +43,7 @@ class Gateway
      */
     public function __construct()
     {
-        $currentVersion = VersionNumberUtility::convertVersionNumberToInteger(
-            VersionNumberUtility::getCurrentTypo3Version()
-        );
-        $targetVersion = VersionNumberUtility::convertVersionNumberToInteger('8.1.0');
-
-        if ($currentVersion < $targetVersion) {
-            $this->transport = GeneralUtility::makeInstance(CompatibilityTransport::class);
-        } else {
-            $this->transport = GeneralUtility::makeInstance(NativeTransport::class);
-        }
+        $this->transport = TransportFactory::getTransportInstanceForCurrentTypo3Version();
     }
 
     /**
